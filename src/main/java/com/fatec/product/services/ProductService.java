@@ -8,14 +8,45 @@ import org.springframework.stereotype.Service;
 import com.fatec.product.entities.Product;
 import com.fatec.product.repositories.ProductRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> getProducts(){
+    public List<Product> getProducts() {
         return productRepository.findAll();
+    }
+
+    public Product getProductById(int id) {
+        return productRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Aluno não cadastrado"));
+    }
+
+    public void deleteProductById(int id) {
+        if (this.productRepository.existsById(id)) {
+            this.productRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Aluno não cadastrado");
+        }
+    }
+
+    public Product save(Product product) {
+        return this.productRepository.save(product);
+    }
+
+    public void update(int id, Product product) {
+        try {
+            Product aux = productRepository.getReferenceById(id);
+            aux.setName(product.getName());
+            aux.setPrice(product.getPrice());
+            aux.setQnt(product.getQnt());
+            this.productRepository.save(aux);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Aluno não cadastrado");
+        }
     }
 
 }

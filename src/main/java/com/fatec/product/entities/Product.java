@@ -34,13 +34,13 @@ public class Product {
         this.name = name;
     }
 
-    public Number getPrice() {
+    public double getPrice() {
         return price;
     }
     public void setPrice(double price) {
         this.price = price;
     }
-    public Number getQnt() {
+    public double getQnt() {
         return qnt;
     }
     public void setQnt(double qnt) {
