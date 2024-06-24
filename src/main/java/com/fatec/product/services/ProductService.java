@@ -22,14 +22,14 @@ public class ProductService {
 
     public Product getProductById(int id) {
         return productRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Aluno não cadastrado"));
+                () -> new EntityNotFoundException("Produto não cadastrado"));
     }
 
     public void deleteProductById(int id) {
         if (this.productRepository.existsById(id)) {
             this.productRepository.deleteById(id);
         } else {
-            throw new EntityNotFoundException("Aluno não cadastrado");
+            throw new EntityNotFoundException("Produto não cadastrado");
         }
     }
 
@@ -45,7 +45,7 @@ public class ProductService {
             aux.setQnt(product.getQnt());
             this.productRepository.save(aux);
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Aluno não cadastrado");
+            throw new EntityNotFoundException("Produto não cadastrado");
         }
     }
 
